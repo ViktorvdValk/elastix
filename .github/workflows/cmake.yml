@@ -106,14 +106,14 @@ jobs:
         ninja
       shell: cmd
       
-    - name: Test
-      shell: bash
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: |
-        cd ..
-        cd Elastix-build
-        ctest -C Release -VV -j 2
+#     - name: Test
+#       shell: bash
+#       # Execute tests defined by the CMake configuration.  
+#       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+#       run: |
+#         cd ..
+#         cd Elastix-build
+#         ctest -C Release -VV -j 2
   
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
