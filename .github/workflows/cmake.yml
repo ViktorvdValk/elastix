@@ -45,7 +45,7 @@ jobs:
       with:
         path: | 
           ITK-build
-        key: ${{ matrix.os }}-${{ itk-git-tag }}-${{ hashFiles('**/lockfiles') }}
+        key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}-${{ hashFiles('**/lockfiles') }}
       
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
@@ -75,7 +75,7 @@ jobs:
         ninja
         
     - name: Build ITK
-      if: matrix.os == 'windows-2019' && matrix.os != 'windows-2019'
+      if: steps.cache.outputs.cache-hit != 'true' && matrix.os == 'windows-2019'
       run: |
         cd ..
         mkdir ITK-build
