@@ -1,0 +1,103 @@
+name: CMake
+
+on: [push, pull_request]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-18.04, windows-2019, macos-10.15]
+        include:
+          - os: ubuntu-18.04
+            c-compiler: "gcc"
+            cxx-compiler: "g++"
+            itk-git-tag: "v5.1.1"
+            cmake-build-type: "MinSizeRel"
+          - os: windows-2019
+            c-compiler: "cl.exe"
+            cxx-compiler: "cl.exe"
+            itk-git-tag: "v5.1.1"
+            cmake-build-type: "Release"
+          - os: macos-10.15
+            c-compiler: "clang"
+            cxx-compiler: "clang++"
+            itk-git-tag: "v5.1.1"
+            cmake-build-type: "MinSizeRel"
+
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install ninja
+    
+    - name: Download ITK
+      run: |
+        cd ..
+        git clone https://github.com/InsightSoftwareConsortium/ITK.git
+        cd ITK
+        git checkout ${{ matrix.itk-git-tag }}
+   
+   - name: Build ITK
+      if: matrix.os != 'windows-2019'
+      run: |
+        cd ..
+        mkdir ITK-build
+        cd ITK-build
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_EXAMPLES=OFF -DBUILD_TESTING:BOOL=OFF -DITK_LEGACY_REMOVE=ON -GNinja ../ITK
+        ninja
+        
+    - name: Build ITK
+      if: matrix.os == 'windows-2019'
+      run: |
+        cd ..
+        mkdir ITK-build
+        cd ITK-build
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_EXAMPLES=OFF -DBUILD_TESTING:BOOL=OFF -DITK_LEGACY_REMOVE=ON -GNinja ../ITK
+        ninja
+      shell: cmd
+    
+    - name: Build Elastix
+      if: matrix.os != 'windows-2019'
+      run: |
+        cd ..
+        mkdir Elastix-build
+        cd Elastix-build
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR=../ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../elastix
+        ninja
+        
+    - name: Build Elastix
+      if: matrix.os == 'windows-2019'
+      run: |
+        cd ..
+        mkdir Elastix-build
+        cd Elastix-build
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR=../ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../elastix
+        ninja
+      shell: cmd
+      
+    - name: Test
+      shell: bash
+      # Execute tests defined by the CMake configuration.  
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: ctest -C $BUILD_TYPE -VV -j 2
+
