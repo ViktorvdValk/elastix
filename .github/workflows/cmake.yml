@@ -16,26 +16,27 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        os: [ubuntu-18.04, windows-2019, macos-10.15]
+        os: [windows-2019]
+#         os: [ubuntu-18.04, windows-2019, macos-10.15]
         include:
-          - os: ubuntu-18.04
-            c-compiler: "gcc"
-            cxx-compiler: "g++"
-            itk-git-tag: "v5.1.1"
-            cmake-build-type: "MinSizeRel"
-            ANNLib: "ANN/libANNlib-5.0.so"
+#           - os: ubuntu-18.04
+#             c-compiler: "gcc"
+#             cxx-compiler: "g++"
+#             itk-git-tag: "v5.1.1"
+#             cmake-build-type: "MinSizeRel"
+#             ANNLib: "ANN/libANNlib-5.0.so"
           - os: windows-2019
             c-compiler: "cl.exe"
             cxx-compiler: "cl.exe"
             itk-git-tag: "v5.1.1"
             cmake-build-type: "Release"
             ANNLib: "ANN/ANNlib-5.0.dll"
-          - os: macos-10.15
-            c-compiler: "clang"
-            cxx-compiler: "clang++"
-            itk-git-tag: "v5.1.1"
-            cmake-build-type: "MinSizeRel"
-            ANNLib: "ANN/libANNlib-5.0.1.dylib"
+#           - os: macos-10.15
+#             c-compiler: "clang"
+#             cxx-compiler: "clang++"
+#             itk-git-tag: "v5.1.1"
+#             cmake-build-type: "MinSizeRel"
+#             ANNLib: "ANN/libANNlib-5.0.1.dylib"
 
     steps:
     - uses: actions/checkout@v2
@@ -109,13 +110,15 @@ jobs:
       shell: bash
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C Release -VV -j 2
+      run: |
+        cd ..
+        cd Elastix-build
+        ctest -C Release -VV -j 2
   
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
       with: 
         name: "${{ matrix.os }}"
         path: |        
-          bin/elastix
-          bin/transformix
-          "${{ matrix.ANNLib}}"
+          Elastix-build/bin/elastix
+          Elastix-build/bin/transformix
