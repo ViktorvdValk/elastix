@@ -115,7 +115,7 @@ jobs:
 #         ctest -C Release -VV -j 2
     - name: Check
       run: |
-        ls -l
+        ls
         ls -l Elastix-build/bin
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
