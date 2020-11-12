@@ -45,7 +45,7 @@ jobs:
       id: cache
       with:
         path: | 
-          ./ITK-build
+          ITK-build
           ITK
         key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}-${{ hashFiles('**/lockfiles') }}
       
@@ -121,5 +121,5 @@ jobs:
       with: 
         name: "${{ matrix.os }}"
         path: |        
-          ..\bin\elastix
-          ../bin/transformix
+          elastix
+          transformix
