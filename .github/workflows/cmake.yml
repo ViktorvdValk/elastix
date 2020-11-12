@@ -121,5 +121,5 @@ jobs:
       with: 
         name: "${{ matrix.os }}"
         path: |        
-          ..\elastix\Elastix-build\bin\elastix
-          ../elastix/Elastix/bin/transformix
+          ..\bin\elastix
+          ../bin/transformix
