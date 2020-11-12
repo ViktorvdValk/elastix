@@ -44,8 +44,7 @@ jobs:
     - uses: actions/cache@v2
       id: cache
       with:
-        path: | 
-          ./ITK-build/
+        path: ~/ITK-build
         key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}
       
     - name: Set up Python 3.7
@@ -114,10 +113,12 @@ jobs:
 #         cd ..
 #         cd Elastix-build
 #         ctest -C Release -VV -j 2
-  
+    - name: Check
+      run: |
+        ls -l
+        ls -l Elastix-build/bin
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
       with: 
         name: "${{ matrix.os }}"
-        path: |        
-         \Elastix-build\bin\elastix.exe
+        path: '~/Elastix-build/bin/elastix.exe'
