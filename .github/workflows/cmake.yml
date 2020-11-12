@@ -65,11 +65,6 @@ jobs:
         cd ITK
         git checkout ${{ matrix.itk-git-tag }}
    
-    - name: Check2
-      run: |
-        ls
-        cd .. 
-        ls
     - name: Build ITK
       if: steps.cache.outputs.cache-hit != 'true' && matrix.os != 'windows-2019'
       run: |
@@ -118,10 +113,7 @@ jobs:
 #         cd ..
 #         cd Elastix-build
 #         ctest -C Release -VV -j 2
-    - name: Check
-      run: |
-        ls
-        ls -l Elastix-build/bin
+
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
       with: 
