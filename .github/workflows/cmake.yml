@@ -32,7 +32,7 @@ jobs:
             cmake-build-type: "Release"
             ANNLib: "ANN/ANNlib-5.0.dll"
 #           - os: macos-10.15 
-#             c-compiler: "clang"
+#             c-compiler: "clang"  
 #             cxx-compiler: "clang++"
 #             itk-git-tag: "v5.1.1"  
 #             cmake-build-type: "MinSizeRel"
