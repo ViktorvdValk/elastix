@@ -121,4 +121,3 @@ jobs:
         name: "${{ matrix.os }}"
         path: |        
          \Elastix-build\bin\elastix.exe
-         \Elastix-build\bin\transformix.exe
