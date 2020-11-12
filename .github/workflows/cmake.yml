@@ -46,6 +46,7 @@ jobs:
       with:
         path: | 
           ./ITK-build
+          ITK
         key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}-${{ hashFiles('**/lockfiles') }}
       
     - name: Set up Python 3.7
@@ -120,5 +121,5 @@ jobs:
       with: 
         name: "${{ matrix.os }}"
         path: |        
-          Elastix-build/bin/elastix
-          Elastix-build/bin/transformix
+          ..\elastix\Elastix-build\bin\elastix
+          ../elastix/Elastix/bin/transformix
