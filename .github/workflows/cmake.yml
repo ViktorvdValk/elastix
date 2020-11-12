@@ -45,9 +45,8 @@ jobs:
       id: cache
       with:
         path: | 
-          ITK-build
-          ITK
-        key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}-${{ hashFiles('**/lockfiles') }}
+          ./ITK-build/
+        key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}
       
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
