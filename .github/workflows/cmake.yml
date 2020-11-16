@@ -60,7 +60,9 @@ jobs:
         python -m pip install ninja
         
     - name: Make directory structure
-      run: mv !(Elastix-source) Elastix-source
+      run: |
+        mkdir Elastix-source
+        mv !(Elastix-source) Elastix-source
     
     - name: Download ITK
       if: steps.cache.outputs.cache-hit != 'true'
