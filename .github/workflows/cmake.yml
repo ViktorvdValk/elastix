@@ -121,10 +121,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with: 
         name: "${{ matrix.os }}"
-        path: Elastix-build/bin/elastix.exe
+        path: ITK-build
         
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
       with: 
         name: "${{ matrix.os }}"
-        path: D:\a\elastix\elastix\Elastix-build\bin\elastix.exe
+        path: D:\a\elastix\elastix\ITK-build
