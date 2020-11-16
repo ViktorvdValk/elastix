@@ -113,9 +113,15 @@ jobs:
 #         cd ..
 #         cd Elastix-build
 #         ctest -C Release -VV -j 2
+    - name: Check Dirs
+      run: |
+        ls
+        cd ..
+        cd Elastix-build/bin
+        ls    
 
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
       with: 
         name: "${{ matrix.os }}"
-        path: '~/Elastix-build/bin/elastix.exe'
+        path: '~/elastix/Elastix-build/bin/elastix.exe'
