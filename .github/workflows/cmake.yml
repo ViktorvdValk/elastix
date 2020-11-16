@@ -108,7 +108,7 @@ jobs:
         mkdir Elastix-build
         cd Elastix-build
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR= ../ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../Elastix-source
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR= ../ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../
         ninja
       shell: cmd
       
