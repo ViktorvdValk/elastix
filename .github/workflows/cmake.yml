@@ -41,13 +41,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - uses: actions/cache@v2
-      id: cache
-      with:
-        path: |
-          ITK-build
-          ITK
-        key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}
+#     - uses: actions/cache@v2
+#       id: cache
+#       with:
+#         path: |
+#           ITK-build
+#           ITK
+#         key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}
       
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
@@ -59,13 +59,13 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install ninja
         
-    - name: Make directory structure
-      run: |
-        mkdir Elastix-source
-        mv * Elastix-source
+#     - name: Make directory structure
+#       run: |
+#         mkdir Elastix-source
+#         mv * Elastix-source
     
     - name: Download ITK
-      if: steps.cache.outputs.cache-hit != 'true'
+#       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         ls
         git clone https://github.com/InsightSoftwareConsortium/ITK.git
@@ -73,7 +73,7 @@ jobs:
         git checkout ${{ matrix.itk-git-tag }}
    
     - name: Build ITK
-      if: steps.cache.outputs.cache-hit != 'true' && matrix.os != 'windows-2019'
+#       if: steps.cache.outputs.cache-hit != 'true' && matrix.os != 'windows-2019'
       run: |
         ls
         mkdir ITK-build
@@ -82,7 +82,7 @@ jobs:
         ninja
         
     - name: Build ITK
-      if: steps.cache.outputs.cache-hit != 'true' && matrix.os == 'windows-2019'
+#       if: steps.cache.outputs.cache-hit != 'true' && matrix.os == 'windows-2019'
       run: |
         ls
         mkdir ITK-build
@@ -132,3 +132,9 @@ jobs:
       with: 
         name: "${{ matrix.os }}"
         path: D:\a\elastix\elastix\Elastix-build\bin\elastix.exe
+        
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v2
+      with: 
+        name: "${{ matrix.os }}"
+        path: Elastix-build\bin\elastix.exe
