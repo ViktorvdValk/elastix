@@ -89,9 +89,6 @@ jobs:
       if: matrix.os != 'windows-2019'
       run: |
         ls
-        cd ..
-        ls
-        cd -
         mkdir Elastix-build
         cd Elastix-build
         cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR=../ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../
@@ -101,13 +98,10 @@ jobs:
       if: matrix.os == 'windows-2019'
       run: |
         ls
-        cd ..
-        ls 
-        cd -
         mkdir Elastix-build
         cd Elastix-build
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR=../ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR= D:\a\elastix\elastix\ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../
         ninja
       shell: cmd
       
@@ -130,3 +124,9 @@ jobs:
       with: 
         name: "${{ matrix.os }}"
         path: Elastix-build/bin/elastix.exe
+        
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v2
+      with: 
+        name: "${{ matrix.os }}"
+        path: D:\a\elastix\elastix\Elastix-build\bin\elastix.exe
