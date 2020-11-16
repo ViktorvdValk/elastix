@@ -98,6 +98,7 @@ jobs:
     - name: Build Elastix
       if: matrix.os == 'windows-2019'
       run: |
+        cat ITK-build/CMakeCache.txt
         ls
         mkdir Elastix-build
         cd Elastix-build
