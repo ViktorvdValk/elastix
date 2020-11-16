@@ -62,7 +62,7 @@ jobs:
     - name: Make directory structure
       run: |
         mkdir Elastix-source
-        ls | grep -v Elastix-source | xargs mv -t Elastix-source
+        mv * Elastix-source
     
     - name: Download ITK
       if: steps.cache.outputs.cache-hit != 'true'
