@@ -116,8 +116,6 @@ jobs:
     - name: Check Dirs
       run: |
         ls
-        cd Elastix-build/bin
-        ls    
 
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
