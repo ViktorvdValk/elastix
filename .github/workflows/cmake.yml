@@ -64,7 +64,7 @@ jobs:
         items=(*)
         mkdir Elastix-source
         mv ${items[*]} Elastix-source
-      shell: cmd
+      shell: bash
     
     - name: Download ITK
       if: steps.cache.outputs.cache-hit != 'true'
@@ -75,7 +75,7 @@ jobs:
         git checkout ${{ matrix.itk-git-tag }}
    
     - name: Build ITK
-#       if: steps.cache.outputs.cache-hit != 'true' && matrix.os != 'windows-2019'
+      if: steps.cache.outputs.cache-hit != 'true' && matrix.os != 'windows-2019'
       run: |
         ls
         mkdir ITK-build
