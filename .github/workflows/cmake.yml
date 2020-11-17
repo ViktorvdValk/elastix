@@ -72,9 +72,7 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         ls
-        git clone https://github.com/InsightSoftwareConsortium/ITK.git ITK-source
-        cd ITK-source/ITK
-        git checkout ${{ matrix.itk-git-tag }}
+        git clone https://github.com/InsightSoftwareConsortium/ITK.git --branch ${{ matrix.itk-git-tag }} --depth 1 ITK-source
    
     - name: Build ITK
       if: steps.cache.outputs.cache-hit != 'true' && matrix.os != 'windows-2019'
