@@ -41,13 +41,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-#     - uses: actions/cache@v2
-#       id: cache
-#       with:
-#         path: |
-#           ITK-build
-#           ITK
-#         key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}
+    - uses: actions/cache@v2
+      id: cache
+      with:
+        path: |
+          ITK-build
+          ITK
+        key: ${{ matrix.os }}-${{ matrix.itk-git-tag }}
       
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
@@ -59,30 +59,31 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install ninja
         
-#     - name: Make directory structure
-#       run: |
-#         mkdir Elastix-source
-#         mv * Elastix-source
+    - name: Make directory structure
+      run: |
+        items=(*)
+        mkdir Elastix-source
+        mv ${items[*]} Elastix-source
     
     - name: Download ITK
-#       if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         ls
         git clone https://github.com/InsightSoftwareConsortium/ITK.git
         cd ITK
         git checkout ${{ matrix.itk-git-tag }}
    
-#     - name: Build ITK
-# #       if: steps.cache.outputs.cache-hit != 'true' && matrix.os != 'windows-2019'
-#       run: |
-#         ls
-#         mkdir ITK-build
-#         cd ITK-build
-#         cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_EXAMPLES=OFF -DBUILD_TESTING:BOOL=OFF -DITK_LEGACY_REMOVE=ON -GNinja ../ITK
-#         ninja
+    - name: Build ITK
+#       if: steps.cache.outputs.cache-hit != 'true' && matrix.os != 'windows-2019'
+      run: |
+        ls
+        mkdir ITK-build
+        cd ITK-build
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_EXAMPLES=OFF -DBUILD_TESTING:BOOL=OFF -DITK_LEGACY_REMOVE=ON -GNinja ../ITK
+        ninja
         
     - name: Build ITK
-#       if: steps.cache.outputs.cache-hit != 'true' && matrix.os == 'windows-2019'
+      if: steps.cache.outputs.cache-hit != 'true' && matrix.os == 'windows-2019'
       run: |
         ls
         mkdir ITK-build
@@ -108,7 +109,7 @@ jobs:
         mkdir Elastix-build
         cd Elastix-build
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR= ../ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DITK_DIR= ../ITK-build -DBUILD_TESTING=ON -DELASTIX_USE_GTEST=ON -DUSE_ALL_COMPONENTS=ON -GNinja ../Elastix-source
         ninja
       shell: cmd
       
