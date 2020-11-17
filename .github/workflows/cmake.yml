@@ -64,7 +64,7 @@ jobs:
         items=(*)
         mkdir Elastix-source
         mv ${items[*]} Elastix-source
-      shell: bash
+      shell: cmd
     
     - name: Download ITK
       if: steps.cache.outputs.cache-hit != 'true'
