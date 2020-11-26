@@ -44,7 +44,7 @@ using namespace std;
  */
 
 template <class charT, class traits = char_traits<charT>>
-class ITK_TEMPLATE_EXPORT xoutbase
+class xoutbase
 {
 public:
   /** Typedef's.*/
