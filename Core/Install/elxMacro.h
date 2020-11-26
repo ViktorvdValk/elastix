@@ -320,6 +320,31 @@
  *      Dll export    *
  *                    *
  ********************************************************************************/
+ // Setup symbol exports
+ #ifndef ITK_TEMPLATE_EXPORT
+ #  ifdef ITK_TEMPLATE_VISIBILITY_DEFAULT
+ #    define ITK_TEMPLATE_EXPORT __attribute__((visibility("default")))
+ #  else
+ #    define ITK_TEMPLATE_EXPORT
+ #  endif
+ #endif
+
+ // Setup symbol exports
+ #ifdef ITK_TEMPLATE_VISIBILITY_DEFAULT
+ #  define ITK_FORCE_EXPORT_MACRO(moduleName) __attribute__((visibility("default")))
+ #else
+ #  define ITK_FORCE_EXPORT_MACRO(moduleName) moduleName##_EXPORT
+ #endif
+
+ #ifndef ITK_FORWARD_EXPORT
+ // If build with shared libraries, on MacOS, if USE_COMPILER_HIDDEN_VISIBILITY is ON
+ #  if defined(__APPLE__) && defined(ITK_TEMPLATE_VISIBILITY_DEFAULT) && defined(ITK_BUILD_SHARED_LIBS) &&              \
+     defined(USE_COMPILER_HIDDEN_VISIBILITY)
+ #    define ITK_FORWARD_EXPORT __attribute__((visibility("default")))
+ #  else
+ #    define ITK_FORWARD_EXPORT
+ #  endif
+ #endif
 
 #if (defined(_WIN32) || defined(WIN32))
 #  define ELASTIXLIB_API
