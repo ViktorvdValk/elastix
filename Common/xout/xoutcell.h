@@ -36,7 +36,7 @@ using namespace std;
  */
 
 template <class charT, class traits = char_traits<charT>>
-class ITK_TEMPLATE_EXPORT xoutcell : public xoutbase<charT, traits>
+class xoutcell : public xoutbase<charT, traits>
 {
 public:
   /** Typdef's. */
