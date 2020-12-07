@@ -46,7 +46,8 @@ namespace
 /** \class Helper class to maintain state when casting a ray.
  *  This helper class keeps the AdvancedRayCastInterpolateImageFunction thread safe.
  */
-template <class TInputImage, class TCoordRep = float>
+template < class TInputImage, class TCoordRep = float >
+  
 class RayCastHelper
 {
 public:
@@ -78,9 +79,7 @@ public:
    */
   void
   SetImage(const InputImageType * input)
-  {
-    m_Image = input;
-  }
+  {m_Image = input;}
 
 
   /**
