@@ -12,6 +12,6 @@ jobs:
       with:
         source: '.'
         exclude: './CMake'
-        extensions: 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
-        clangFormatVersion: 8
+        extensions: 'hxx,h,cxx'
+        clangFormatVersion: 8.0.1
         style: file
