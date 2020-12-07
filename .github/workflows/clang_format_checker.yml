@@ -11,5 +11,5 @@ jobs:
           fetch-depth: 1
       - uses: RafikFarhad/clang-format-github-action@v1
         with:
-          style: 'file'
-          sources: "**/*.h,**/*.hxx,**/*.c, **/*.cxx"
+          style: file
+          sources: "Common/**/*.h,Common/**/*.hxx,Common/**/*.c,Common/**/*.cxx"
