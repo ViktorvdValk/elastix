@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           # check out HEAD on the branch
-          ref: ${{ GITHUB_REF }}
+          ref: $GITHUB_REF
           # make sure the parent commit is grabbed as well, because
           # that's what will get formatted (i.e. the most recent commit)
           fetch-depth: 2
@@ -24,4 +24,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4.1.2
         with:
           commit_message: 🎨 apply clang-format changes
-          branch: ${{ GITHUB_REF }}
+          branch: $GITHUB_REF
