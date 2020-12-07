@@ -11,7 +11,7 @@ jobs:
     - uses: DoozyX/clang-format-lint-action@v0.11
       with:
         source: '.'
-        exclude: 'CMake'
-        extensions: ''c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
+        exclude: './CMake'
+        extensions: 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
         clangFormatVersion: 8
         style: file
