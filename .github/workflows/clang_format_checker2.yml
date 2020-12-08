@@ -8,6 +8,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: DoozyX/clang-format-lint-action@v0.11
       with:
-        fetch-depth: 2
-    - uses: yshui/git-clang-format-lint@master
+        source: '.'
+        exclude: './CMake'
+        extensions: 'hxx,h,cxx'
+        clangFormatVersion: 8
+        style: file
