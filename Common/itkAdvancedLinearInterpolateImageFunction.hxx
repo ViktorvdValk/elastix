@@ -29,9 +29,8 @@ namespace itk
  * ***************** Constructor ***********************
  */
 
-template < class TInputImage, class TCoordRep>
-AdvancedLinearInterpolateImageFunction<TInputImage, TCoordRep>::AdvancedLinearInterpolateImageFunction()
-= default;
+template <class TInputImage, class TCoordRep>
+AdvancedLinearInterpolateImageFunction<TInputImage, TCoordRep>::AdvancedLinearInterpolateImageFunction() = default;
 
 /**
  * ***************** EvaluateDerivativeAtContinuousIndex ***********************
