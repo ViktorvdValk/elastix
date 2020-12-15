@@ -54,7 +54,7 @@ jobs:
         path: |
           ITK-build
           ITK-source
-        key: ${{ matrix.itk-git-tag }}-${{ matrix.os }}-${{ matrix.cmake-build-type }}
+        key: ${{ matrix.itk-git-tag }}-${{ matrix.os }}
       
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
