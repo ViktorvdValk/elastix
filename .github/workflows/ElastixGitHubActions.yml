@@ -48,13 +48,13 @@ jobs:
         mv .clang-format Elastix-source
       shell: bash
       
-    - uses: actions/cache@v2
-      id: cache
-      with:
-        path: |
-          ITK-build
-          ITK-source
-        key: ${{ matrix.itk-git-tag }}-${{ matrix.os }}
+#     - uses: actions/cache@v2
+#       id: cache
+#       with:
+#         path: |
+#           ITK-build
+#           ITK-source
+#         key: ${{ matrix.itk-git-tag }}-${{ matrix.os }}
       
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
@@ -93,7 +93,6 @@ jobs:
     
     - name: Build Elastix Unix
       if: matrix.os != 'windows-2019'
-
       run: |
         mkdir Elastix-build
         cd Elastix-build
