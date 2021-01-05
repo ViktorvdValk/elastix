@@ -50,7 +50,7 @@ ElastixTemplate<TFixedImage, TMovingImage>::GetFixedImage(unsigned int idx) cons
 {
   if (idx < this->GetNumberOfFixedImages())
   {
-    return dynamic_cast<FixedImageType *>(this->GetFixedImageContainer()->ElementAt(idx).GetPointer());
+    return static_cast<FixedImageType *>(this->GetFixedImageContainer()->ElementAt(idx).GetPointer());
   }
 
   return nullptr;
@@ -67,7 +67,7 @@ ElastixTemplate<TFixedImage, TMovingImage>::GetMovingImage(unsigned int idx) con
 {
   if (idx < this->GetNumberOfMovingImages())
   {
-    return dynamic_cast<MovingImageType *>(this->GetMovingImageContainer()->ElementAt(idx).GetPointer());
+    return static_cast<MovingImageType *>(this->GetMovingImageContainer()->ElementAt(idx).GetPointer());
   }
 
   return nullptr;
@@ -84,7 +84,7 @@ ElastixTemplate<TFixedImage, TMovingImage>::GetFixedMask(unsigned int idx) const
 {
   if (idx < this->GetNumberOfFixedMasks())
   {
-    return dynamic_cast<FixedMaskType *>(this->GetFixedMaskContainer()->ElementAt(idx).GetPointer());
+    return static_cast<FixedMaskType *>(this->GetFixedMaskContainer()->ElementAt(idx).GetPointer());
   }
 
   return nullptr;
@@ -101,7 +101,7 @@ ElastixTemplate<TFixedImage, TMovingImage>::GetMovingMask(unsigned int idx) cons
 {
   if (idx < this->GetNumberOfMovingMasks())
   {
-    return dynamic_cast<MovingMaskType *>(this->GetMovingMaskContainer()->ElementAt(idx).GetPointer());
+    return static_cast<MovingMaskType *>(this->GetMovingMaskContainer()->ElementAt(idx).GetPointer());
   }
 
   return nullptr;
