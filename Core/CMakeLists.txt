@@ -197,22 +197,6 @@ target_link_libraries( transformix_lib ${ELASTIX_TARGET_LINK_LIBRARIES} )
 
 set( ELASTIX_LIBRARIES elastix_lib transformix_lib PARENT_SCOPE )
 
-set(_template_visibility_init OFF)
-if(NOT ITK_PRIVATE_DYNAMIC_CAST
-    AND NOT (CMAKE_CXX_VISIBILITY_PRESET STREQUAL "hidden"
-             AND NOT BUILD_SHARED_LIBS)
-  )
-  set(_template_visibility_init ON)
-endif()
-# This adds default symbol visibility to template class types, which
-# results in 'weak external typeinfo' in libraries that use these
-# types, whether with implicit or explicit instantiation, default
-# hidden or non-hidden visibility.
-# This is required on Mac OSX to avoid dynamic_cast failures across binaries.
-# See Change-Id: Ib4a6b8cafe8720c3a2a5b3e6ba833d11002978df for more information."
-option(ITK_TEMPLATE_VISIBILITY_DEFAULT "Set symbol visibility to default for template class declarations. https://itk.org/Wiki/ITK/FAQ" "${_template_visibility_init}")
-mark_as_advanced(ITK_TEMPLATE_VISIBILITY_DEFAULT)
-
 if( MSVC )
   # NOTE: that linker /INCREMENTAL:NO flag makes it impossible to use
   # Debug breakpoints in Visual Studio 10.0. It is probably the Visual Studio 10.0 bug.
