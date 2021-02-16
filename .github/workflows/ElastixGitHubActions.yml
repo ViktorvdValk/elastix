@@ -169,8 +169,8 @@ jobs:
       if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags') && matrix.os == 'ubuntu-18.04'     
       run: |
         mkdir output
-        docker build -t viktorvdv/elastix:${GITHUB_REF:10} .
-        docker run -u $UID:$GROUPS --mount type=bind,source="$(pwd)"/output,target=/out -v "$(pwd)"/Elastix-source/Testing/Data:/elastix/ viktorvdv/elastix:${GITHUB_REF:10} elastix -out /out/ -p /elastix/parameters.3D.NC.euler.ASGD.001.txt -f /elastix/3DCT_lung_baseline.mha -m /elastix/3DCT_lung_followup.mha
-        docker push viktorvdv/elastix:${GITHUB_REF:10}
+        docker build -t viktorvdv/elastix:${GITHUB_REF#refs/tags/} .
+        docker run -u $UID:$GROUPS --mount type=bind,source="$(pwd)"/output,target=/out -v "$(pwd)"/Elastix-source/Testing/Data:/elastix/ viktorvdv/elastix:${GITHUB_REF#refs/tags/} elastix -out /out/ -p /elastix/parameters.3D.NC.euler.ASGD.001.txt -f /elastix/3DCT_lung_baseline.mha -m /elastix/3DCT_lung_followup.mha
+        docker push viktorvdv/elastix:${GITHUB_REF#refs/tags/}
 
 
